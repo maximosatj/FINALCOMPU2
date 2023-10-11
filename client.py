@@ -1,5 +1,6 @@
-import socket   
+import socket
 import threading
+from datetime import datetime
 
 username = input("Enter your username: ")
 
@@ -8,7 +9,6 @@ port = 55555
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((host, port))
-
 
 def receive_messages():
     while True:
@@ -20,13 +20,15 @@ def receive_messages():
             else:
                 print(message)
         except:
-            print("An error Ocurred")
-            client.close
+            print("An error occurred")
+            client.close()
             break
 
 def write_messages():
     while True:
-        message = f"{username}: {input('')}"
+        message_content = input('')
+        current_time = datetime.now().strftime("%H:%M:%S")
+        message = f"{current_time} {username}: {message_content}"
         client.send(message.encode('utf-8'))
 
 receive_thread = threading.Thread(target=receive_messages)

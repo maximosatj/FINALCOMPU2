@@ -1,6 +1,6 @@
-import socket   
+import socket
 import threading
-
+from datetime import datetime
 
 host = '127.0.0.1'
 port = 55555
@@ -10,7 +10,6 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
 server.listen()
 print(f"Server running on {host}:{port}")
-
 
 clients = []
 usernames = []
@@ -24,7 +23,9 @@ def handle_messages(client):
     while True:
         try:
             message = client.recv(1024)
-            broadcast(message, client)
+            current_time = datetime.now().strftime("%H:%M:%S")
+            formatted_message = f"{current_time} {message.decode('utf-8')}"
+            broadcast(formatted_message.encode('utf-8'), client)
         except:
             index = clients.index(client)
             username = usernames[index]
@@ -33,7 +34,6 @@ def handle_messages(client):
             usernames.remove(username)
             client.close()
             break
-
 
 def receive_connections():
     while True:
@@ -55,4 +55,3 @@ def receive_connections():
         thread.start()
 
 receive_connections()
-
