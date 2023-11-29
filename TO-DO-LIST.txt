@@ -1,0 +1,27 @@
+Chat room
+Clases
+Client builder
+Client menu
+
+
+main.py
+* iniciar servidor (única instancia)
+* mostrar menu (crear sala de chat, entrar a chatear, ver usuarios conectados, salir)
+
+server.py
+* hostear servidor
+* recibir conexiones
+* manejar mensajes y mandarlos a sala de chat
+
+client.py
+* creación de cliente (builder)
+* hilo de escritura
+* hilo de lectura (posible)
+
+chat_room.py
+* única instancia
+* mostrar mensajes, conexiones y desconexiones
+* hilo de lectura
+
+constants.py
+* almacenamiento de constantes

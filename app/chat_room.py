@@ -1,20 +1,16 @@
 import socket
 import threading
-from datetime import datetime
+from constants import HOST, PORT
 
-username = input("Enter your username: ")
-
-host = '127.0.0.1'
-port = 55555
+username = 'chat_room'
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((host, port))
+client.connect((HOST, PORT))
 
 def receive_messages():
     while True:
         try:
             message = client.recv(1024).decode('utf-8')
-
             if message == "@username":
                 client.send(username.encode("utf-8"))
             else:
@@ -24,15 +20,6 @@ def receive_messages():
             client.close()
             break
 
-def write_messages():
-    while True:
-        message_content = input('')
-        current_time = datetime.now().strftime("%H:%M:%S")
-        message = f"{current_time} {username}: {message_content}"
-        client.send(message.encode('utf-8'))
 
 receive_thread = threading.Thread(target=receive_messages)
 receive_thread.start()
-
-write_thread = threading.Thread(target=write_messages)
-write_thread.start()
