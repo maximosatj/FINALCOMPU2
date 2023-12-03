@@ -1,12 +1,19 @@
 import socket
 import asyncio
 from datetime import datetime
-from constants import HOST, PORT, MAX
 from dataclasses import dataclass
 import random
 import select
+import argparse
 
+parser = argparse.ArgumentParser(description='Chat server')
+parser.add_argument('--host', type=str, default='localhost', help='Host')
+parser.add_argument('--port', type=int, default=8080, help='Port')
+parser.add_argument('--max', type=int, default=5, help='Max connections')
+args = parser.parse_args()
 
+#
+                   
 class Server:
     clients = []
     usernames = []
@@ -15,9 +22,9 @@ class Server:
     sockets = [server]
 
     def connect(self):
-        self.server.bind((HOST, PORT))
-        self.server.listen(MAX)
-        print(f"Server running on {HOST}:{PORT}")
+        self.server.bind((args.host, args.port))
+        self.server.listen(args.max)
+        print(f"Server running on {args.host}:{args.port}")
 
     async def send_to_chat_room(self, message):
         for client in self.clients:
