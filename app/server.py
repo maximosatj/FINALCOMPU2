@@ -4,15 +4,11 @@ from datetime import datetime
 from dataclasses import dataclass
 import random
 import select
-import argparse
+import os
 
-parser = argparse.ArgumentParser(description='Chat server')
-parser.add_argument('--host', type=str, default='localhost', help='Host')
-parser.add_argument('--port', type=int, default=8080, help='Port')
-parser.add_argument('--max', type=int, default=5, help='Max connections')
-args = parser.parse_args()
-
-#
+host = os.environ.get('HOST', '127.0.0.1')
+port = int(os.environ.get('PORT', 5000))
+max_clients = int(os.environ.get('MAX', 5))
                    
 class Server:
     clients = []
@@ -22,9 +18,9 @@ class Server:
     sockets = [server]
 
     def connect(self):
-        self.server.bind((args.host, args.port))
-        self.server.listen(args.max)
-        print(f"Server running on {args.host}:{args.port}")
+        self.server.bind((host, port))
+        self.server.listen(max_clients)
+        print(f"Server running on {host}:{port}")
 
     async def send_to_chat_room(self, message):
         for client in self.clients:
