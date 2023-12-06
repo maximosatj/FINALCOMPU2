@@ -27,6 +27,8 @@ def receive_messages():
             message = client.recv(1024).decode('utf-8')
             if message == "@username":
                 client.send(username.encode("utf-8"))
+            elif message.startswith('USERS ONLINE: '):
+                print(message)
             else:
                 print(f"\nMENSAJE DEL SERVIDOR: {message}")
         except:

@@ -25,11 +25,9 @@ class Server:
     async def send_to_chat_room(self, message):
         for client in self.clients:
             if client.username == 'chat_room':
-                print(f'Procesando mensaje {message}')
                 latency = random.uniform(0.005, 1.5)
                 await asyncio.sleep(latency)
                 client.socket.send(message)
-                print(f'Mensaje enviado {message}')
 
     async def accept_connection(self):
         # Si el socket listo es el socket del servidor, significa que hay una nueva conexión
@@ -58,7 +56,7 @@ class Server:
         try:
             message = s.recv(1024)
             if message == b'get_users':
-                users = 'USERS: '+', '.join(self.users_connected())
+                users = 'USERS ONLINE: '+', '.join(self.users_connected())
                 s.send(users.encode('utf-8'))
             elif message:
                 current_time = datetime.now().strftime("%H:%M:%S")
