@@ -1,19 +1,18 @@
 import socket
 from datetime import datetime
-from dataclasses import dataclass
 import random
 import os
 import time
 import threading
+from client import Client
 
-host = os.environ.get('HOST', '127.0.0.1')
+host = os.environ.get('HOST', '0.0.0.0')
 port = int(os.environ.get('PORT', 5000))
 max_clients = int(os.environ.get('MAX', 5))
                    
 class Server:
     clients = []
     usernames = []
-    chat_room = ''
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def connect(self):
@@ -80,12 +79,6 @@ class Server:
 
     def users_connected(self):
         return self.usernames
-
-@dataclass
-class Client:
-    username: str
-    socket: socket.socket
-    address: str
 
 if __name__ == "__main__":
     server = Server()
