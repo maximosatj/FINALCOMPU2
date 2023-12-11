@@ -6,6 +6,6 @@ USER employee
 
 WORKDIR /app
 
-COPY server.py /app/
+COPY server.py client.py /app/
 
 CMD ["python", "server.py"]

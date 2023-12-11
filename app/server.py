@@ -6,7 +6,7 @@ import time
 import threading
 from client import Client
 
-host = os.environ.get('HOST', '0.0.0.0')
+host = str(os.environ.get('HOST', "0.0.0.0"))
 port = int(os.environ.get('PORT', 5000))
 max_clients = int(os.environ.get('MAX', 5))
                    
