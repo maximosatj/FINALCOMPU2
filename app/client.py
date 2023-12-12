@@ -63,6 +63,7 @@ class ClientManagment:
 
         print(f"Sending file '{file_name}' ...")
         await asyncio.sleep(5)
+        client.send(f"{username} sent a file --> {file_name}".encode('utf-8'))
         print(f"File '{file_name}' sent successfully")
 
     async def get_users_connected(self):
