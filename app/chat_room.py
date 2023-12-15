@@ -1,13 +1,19 @@
 import socket
 import threading
-from constants import HOST, PORT
+import argparse
 
 username = 'chat_room'
 
-#Check argpars coneection to server
+parser = argparse.ArgumentParser(description='Chat Room Server')
+parser.add_argument('-ht', '--host', type=str, help='Host IP', required=True)
+parser.add_argument('-p', '--port', type=int, help='Port', required=True)
+args = parser.parse_args()
+
+host = args.host
+port = args.port
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((HOST, PORT))
+client.connect((host, port))
 
 def receive_messages():
     while True:
